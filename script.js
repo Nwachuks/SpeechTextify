@@ -70,7 +70,14 @@ function createBox(item) {
     `;
 
     // Speech Event
+    box.addEventListener('click', () => {
+        setTextMessage(text);
+        speakText();
 
+        // Add active effect
+        box.classList.add('active');
+        setTimeout(() => box.classList.remove('active'), 800);
+    });
 
     main.appendChild(box);
 }
@@ -92,6 +99,19 @@ function getVoices() {
 
 // Voices changed
 speechSynthesis.addEventListener('voiceschanged', getVoices)
+
+// Init speech synthesis utterance
+const message = new SpeechSynthesisUtterance();
+
+// Set text
+function setTextMessage(text) {
+    message.text = text
+}
+
+// Speak text
+function speakText() {
+    speechSynthesis.speak(message);
+}
 
 // Toggle text box
 toggleBtn.addEventListener('click', () => {
